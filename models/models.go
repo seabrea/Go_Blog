@@ -1,39 +1,43 @@
 package models
 
 import (
-	"time"
 	"os"
 	"path"
+	"time"
 
 	"github.com/astaxie/beego/orm"
+
+	// Register sqlite
 	_ "github.com/mattn/go-sqlite3"
 )
 
 const (
-	_DB_NAME        = "data/beeblog.db"
-	_SQLITE3_DRIVER = "sqlite3"
+	dbName        = "data/beeblog.db"
+	sqlite3Driver = "sqlite3"
 )
 
+// Category 目录
 type Category struct {
-	Id         int64
+	ID         int64
 	Title      string
 	CreateTime time.Time `orm:"index"`
 	Views      int64     `orm:"index"`
 }
 
+// Topic 文章
 type Topic struct {
-	Id         int64
-	Uid        int64
+	ID         int64
+	UID        int64
 	Title      string
 	CreateTime time.Time `orm:"index"`
 }
 
-func RegisterDB(){
-	if !com.IsExist(_DB_NAME) {
-		os.MkdirAll(path.Dir(_DB_NAME), os.ModePerm)
-		os.Create(_DB_NAME)
+func RegisterDB() {
+	if !com.IsExist(dbName) {
+		os.MkdirAll(path.Dir(dbName), os.ModePerm)
+		os.Create(dbName)
 	}
 
 	orm.RegisterModel(new(Category), new(Topic))
-	orm.RegisterDataBase("default",_SQLITE3_DRIVER,_DB_NAME,10)
+	orm.RegisterDataBase("default", sqlite3Driver, dbName, 10)
 }
