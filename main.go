@@ -1,10 +1,12 @@
 package main
 
 import (
-	"Go_Blog/models"
-	_ "Go_Blog/routers"
+	"GoBlog/controllers"
+	"GoBlog/models"
+	_ "GoBlog/routers"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 )
 
 func init() {
@@ -12,6 +14,8 @@ func init() {
 }
 
 func main() {
-	//orm.debug = true
+	orm.Debug = false
+	orm.RunSyncdb("default", false, true)
+	beego.Router("/", &controllers.MainController{})
 	beego.Run()
 }
