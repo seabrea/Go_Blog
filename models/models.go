@@ -5,6 +5,7 @@ import (
 	"path"
 	"time"
 
+	"github.com/Unknwon/com"
 	"github.com/astaxie/beego/orm"
 
 	// Register sqlite
